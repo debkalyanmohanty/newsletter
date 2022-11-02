@@ -40,10 +40,10 @@ app.post("/",(req,res)=>{
 
    const request = https.request(url,options,function(response){
     if(response.statusCode == 200){
-        res.sendFile(path.join(__dirname,"/success.html"));
+        res.sendFile(path.join(__dirname,"success.html"));
     }
     else {
-        res.sendFile(path.join(__dirname,"/failure.html"));
+        res.sendFile(path.join(__dirname,"failure.html"));
     }
     response.on("data",()=>{
         console.log(JSON.parse(jsonData));
