@@ -3,6 +3,10 @@ const https = require('https');
 const path = require('path');
 const bodyParser = require('body-parser');
 const { request } = require('http');
+const nodemailer = require('nodemailer');
+
+
+
 
 const app = express();
 
@@ -16,42 +20,59 @@ app.post("/",(req,res)=>{
    const firstName = req.body.fname;
    const lastName = req.body.lname;
    const email = req.body.email;
+   var transporter = nodemailer.createTransport({
+    host:'smtp.gmail.com',
+    port: 465,
+    secure:'true',
+    auth: {
+        user : 'debkalyanmohanty@gmail.com',
+        pass: 'fjhjrkbmyipyvdnl'
 
-   const data = {
-    members : [
-        {
-            email_address: email,
-            status: "subscribed",
-            merge_fields: {
-                FNAME: firstName,
-                LNAME: lastName
-            }
-
-        }
-    ]
-   };
-   const jsonData = JSON.stringify(data);
-
-   const url = 'https://us13.api.mailchimp.com/3.0/lists/5c01e259a9';
-   const options = {
-    method:"POST",
-    auth: "debkalyan:09ad7e5581059f6dc59e697653e83aad-us13"
-   };
-
-   const request = https.request(url,options,function(response){
-    if(response.statusCode == 200){
-        res.sendFile(path.join(__dirname,"success.html"));
     }
-    else {
-        res.sendFile(path.join(__dirname,"failure.html"));
-    }
-    response.on("data",()=>{
-        console.log(JSON.parse(jsonData));
-    });
+ });
+   var mailOptions = {
+    from:'debkalyanmohanty@gmail.com',
+    to :email,
+    subject: 'SUBSCRIBED SUCCESSFULLY',
+    text : 'THANK U '+firstName+' FOR SUBSCRIBING TO TOUREV NEWSLETTER YOU WILL SOON GET MORE UPDATES'
+   };
+   transporter.sendMail(mailOptions , (err,info)=>{
+    if(err) res.sendFile(path.join(__dirname,"failure.html"));
+    else  res.sendFile(path.join(__dirname,"success.html"));
     
    });
 
-   request.end();
+
+//    const data = {
+//     members : [
+//         {
+//             email_address: email,
+//             status: "subscribed",
+//             merge_fields: {
+//                 FNAME: firstName,
+//                 LNAME: lastName
+//             }
+
+//         }
+//     ]
+//    };
+//    const jsonData = JSON.stringify(data);
+
+//    const url = 'https://us13.api.mailchimp.com/3.0/lists/5c01e259a9';
+//    const options = {
+//     method:"POST",
+//     auth: "debkalyan:09ad7e5581059f6dc59e697653e83aad-us13"
+//    };
+
+//    const request = https.request(url,options,function(response){
+    
+//     // response.on("data",()=>{
+//     //     console.log(JSON.parse(jsonData));
+//     // });
+    
+//    });
+
+//    request.end();
 
 
 });
