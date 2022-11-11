@@ -43,36 +43,7 @@ app.post("/",(req,res)=>{
    });
 
 
-//    const data = {
-//     members : [
-//         {
-//             email_address: email,
-//             status: "subscribed",
-//             merge_fields: {
-//                 FNAME: firstName,
-//                 LNAME: lastName
-//             }
 
-//         }
-//     ]
-//    };
-//    const jsonData = JSON.stringify(data);
-
-//    const url = 'https://us13.api.mailchimp.com/3.0/lists/5c01e259a9';
-//    const options = {
-//     method:"POST",
-//     auth: "debkalyan:09ad7e5581059f6dc59e697653e83aad-us13"
-//    };
-
-//    const request = https.request(url,options,function(response){
-    
-//     // response.on("data",()=>{
-//     //     console.log(JSON.parse(jsonData));
-//     // });
-    
-//    });
-
-//    request.end();
 
 
 });
